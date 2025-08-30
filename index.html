@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, minimum-scale=1.00, maximum-scale=1.50">
+        <meta name="theme-color" content="#257BE6" >
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+        <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/sf-intermosaic">
+        <link rel="stylesheet" href="style.css">
+        <link rel="shortcut icon" href="images/sonic.ico"/>
+        <script as="script" src="src/loading.js"></script>
+        <script as="script" src="src/prep.js"></script>
+        <script rel="preload" as="script" src="src/game.js"></script> 
+        <script as="script" src="src/score.js"></script> 
+        <script rel="preload" as="script" src="src/soundtrack.js"></script> 
+        <script rel="preload" as="script" src="src/obstacle.js"></script>
+        <script as="script" src="src/characters.js"></script>
+        <script as="script" src="src/menus.js"></script>
+        <title>Sonic Runner</title>
+    </head>
+    <body>
+        <div id="loading">
+            <div class="load">
+                <img id="loadIMG" src="sprites/gameover-sonic.gif"><img>
+            </div>
+        </div>
+        <header>
+            <a href="https://www.sonicthehedgehog.com/">
+                <img loading="lazy" src="images/Sonic_Runners_logo.png" alt="Sonic Runners" 
+                title="Logo" id="SonicRunners">
+            </a>
+        </header>
+        <div class="subheader">
+        </div>
+        <div class="area content">
+            <p id="play-txt" class="hid">Press any key or click the button to start!</p>
+            <div class="start">
+                <a id="play" class="button hid" onclick="wait()">
+                    <i class="fa fa-play"></i>
+                </a>
+                <div class="game" id="background">
+                    <div class="left-wall" id="left"></div>
+                    <div class="right-wall" id="right"></div>
+                    <div class="layout">
+                        <div class="column">
+                            <div class="score"> <img loading="lazy" src="sprites/score.png"> </div>
+                            <span class="score" id="points">00</span>
+                        </div>
+                    </div>
+                    <div id="sonic"></div>
+                    <div class= "objects-bg">
+                        <div class="object" id="bg-object1"></div>
+                        <div class="object" id="bg-object2"></div>
+                        <div class="object" id="object1"></div>
+                        <div class="object" id="object2"></div>
+                        <div class="object" id="object3"></div>
+                        <div class="object" id="object4"></div>
+                        <div class="object" id="object5"></div>
+                    </div>
+                    <div class="flying-enemy">
+                        <div class="obstacle" id="badnik2"></div>
+                    </div>
+                    <div class="ground-enemy">
+                        <div class="obstacle" id="badnik1"></div>
+                    </div>
+                    <div class="alive">
+                        <div class="row">
+                            <div class="rings"> <img loading="lazy" id="life-icon" src="sprites/Sonic/life-icon.gif"> </div>
+                            <div class="rings" id="lifes"> </div>
+                        </div>
+                    </div>
+                    <div class="ground" id="ground"></div>
+                    <div class="extra hid" id="tip">Tip: You can <b> DOUBLE JUMP </b> if you press jump 2 times!</div>
+                </div>
+            </div>
+            <div class="gameover hidden" id="gameover">
+                <div class="restart">
+                    <img src="sprites/gameover.png" title="Game Over!" alt="Game Over" style="width: 45vh; 
+                    height: 6vh; margin-bottom: 2vh;">
+                    <a id="earned-points"> Score: </a><br>
+                    <a id="highscore"> HighScore: </a><br>
+                    <a id="newhighscore" class="hidden"> NEW HIGHSCORE! </a><br>
+                    <button class="button" id="restart" onclick="location.reload()">
+                        <i class="fa fa-undo"></i>
+                    </button>
+                    <img src="sprites/gameover-sonic.gif" title="Continue?" alt="Continue?" style="width: 24vh; 
+                    height: 16vh;">
+                </div>
+            </div>
+            <div class="select-area" id="charArea">
+                <button class="select" onclick="openCharSelect()"></button>
+                <div class="charOpt" id="charOpt">
+                    <!-- Row 1 -->
+                    <div class="charRow hidden option">
+                        <button class="char" onclick="ClassicSonic()" style="background-image: url(sprites/ClassicSonic/classicsonic-run.gif); background-repeat: no-repeat; background-size: 10vh 10vh; background-position: center;"></button>
+                        <button class="char" onclick="Sonic()" style="background-image: url(sprites/Sonic/sonic-run.gif); background-repeat: no-repeat; background-size: 10vh 10vh; background-position: center;"></button>
+                        <button class="char" onclick="Amy()" style="background-image: url(sprites/Amy/amy-run.gif); background-repeat: no-repeat; background-size: 10vh 10vh; background-position: center;"></button>
+                        <button class="char" onclick="Shadow()"style="background-image: url(sprites/Shadow/shadow-run.gif); background-repeat: no-repeat; background-size: 10vh 10vh; background-position: center;"></button>
+                        <button class="char" onclick="MetalSonic()"style="background-image: url(sprites/MetalSonic/metalsonic-run.gif); background-repeat: no-repeat; background-size: 10vh 10vh; background-position: center;"></button>
+                    </div>
+                    <div class="mobile hidden option">
+                        <button class="char" onclick="ClassicSonic()" style="background-image: url(sprites/ClassicSonic/classicsonic-run.gif); background-repeat: no-repeat; background-size: 10vh 10vh; background-position: center;"></button>
+                        <button class="char" onclick="Sonic()" style="background-image: url(sprites/Sonic/sonic-run.gif); background-repeat: no-repeat; background-size: 10vh 10vh; background-position: center;"></button>
+                        <button class="char" onclick="MetalSonic()" style="background-image: url(sprites/MetalSonic/metalsonic-run.gif); background-repeat: no-repeat; background-size: 10vh 10vh; background-position: center;"></button>
+                    </div>
+
+                    <!-- Row 2 -->
+                    <div class="charRow hidden option">
+                        <button class="char" onclick="ComingSoon()" style="background-image: url(images/coming.png); background-repeat: no-repeat; background-size: 20vh 12vh; background-position: center;"></button>
+                        <button class="char" onclick="ComingSoon()" style="background-image: url(images/coming.png); background-repeat: no-repeat; background-size: 20vh 12vh; background-position: center;"></button>
+                        <button class="char" onclick="ComingSoon()" style="background-image: url(images/coming.png); background-repeat: no-repeat; background-size: 20vh 12vh; background-position: center;"></button>
+                        <button class="char" onclick="ComingSoon()" style="background-image: url(images/coming.png); background-repeat: no-repeat; background-size: 20vh 12vh; background-position: center;"></button>
+                        <button class="char" onclick="ComingSoon()" style="background-image: url(images/coming.png); background-repeat: no-repeat; background-size: 20vh 12vh; background-position: center;"></button>
+                    </div>
+                    <div class="mobile hidden option">
+                        <button class="char" onclick="Shadow()" style="background-image: url(sprites/Shadow/shadow-run.gif); background-repeat: no-repeat; background-size: 10vh 10vh; background-position: center;"></button>
+                        <button class="char" onclick="Amy()" style="background-image: url(sprites/Amy/amy-run.gif); background-repeat: no-repeat; background-size: 10vh 10vh; background-position: center;"></button>
+                        <button class="char" onclick="ComingSoon()" style="background-image: url(images/coming.png); background-repeat: no-repeat; background-size: 22vh 12vh; background-position: center;"></button>
+                    </div>
+
+                    <!-- Info -->
+                    <p class="hidden option" id="charName"> Character Select </p>
+                    <p class="hidden option" id="extraInfo"> Choose your Character! </p>
+                    <button class="charClose hidden option" id="charClose" onclick="closeCharSelect()"> Close <i class="fa fa-times"></i></button>
+                </div>
+                <button class="select" onclick="Stage()"style="background-image: url(images/stage-select.jpg);"></button>
+            </div>
+        </div>
+
+        <footer>
+            <div class="sega">
+                <span class="logos">
+                    <figure class="img-section">
+                        <a href="https://www.sega.com/">
+                            <img src="https://www.sonicthehedgehog.com/wp-content/uploads/2021/08/Sega_Logo-WHT-R.png.webp" 
+                            alt="SEGA" title="SEGA" id="SEGA">
+                        </a>
+                    </figure>
+                    <figure class="img-section">
+                        <a href="https://www.sega.com/free-tags/sonic-team">
+                            <img src="https://upload.wikimedia.org/wikipedia/pt/thumb/9/97/Sonic_Team_Logo.svg/1280px-Sonic_Team_Logo.svg.png" 
+                            alt="Sonic Team" title="Sonic Team" id="SonicTeam">
+                        </a>
+                    </figure>
+                </span>
+            </div>
+        </footer>
+    </body>
+</html>
